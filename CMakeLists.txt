@@ -4,15 +4,42 @@ set(CMAKE_CXX_STANDARD 20)
 set(IMGUI_SDL imgui_sdl)
 set(MAIN main)
 
+set(WEB_SERVER_LIB web_server_lib)
+set(UTILS_LIB utils)
+set(IMGUI_LIB imgui_lib)
+set(CONFIG config)
+
 add_executable(${MAIN} main.cpp)
 
+set(CPACK_PROJECT_NAME ${PROJECT_NAME})
+set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+
+include(cmake/find_opencv_and_torch.cmake)
+
 if (WIN32)
-  target_link_libraries(${MAIN}
-    d3d9.lib
-    d3dcompiler.lib
-    dxgi.lib
-  )
+    find_opencv_and_torch(
+      "C:\\Users\\user\\Repos\\C++Libraries\\libtorch"
+      "C:\\Users\\user\\Repos\\C++Libraries\\opencv\\build\\x64\\vc16"
+    )
+
+    message(STATUS "OpenCV_INCLUDE_DIRS = ${OpenCV_INCLUDE_DIRS}")
+    message(STATUS "OpenCV_LIBS = ${OpenCV_LIBS}")
+
+    target_link_libraries(${MAIN}
+      d3d9.lib
+      d3dcompiler.lib
+      dxgi.lib
+    )
 elseif (APPLE)
+    find_opencv_and_torch(
+      "/Users/chingcheonglee/Repos/C++Library/libtorch"
+      "/opt/homebrew/Cellar/opencv/4.7.0_1"
+    )
+    find_package(OpenCV REQUIRED)
+    message(STATUS "OpenCV_INCLUDE_DIRS = ${OpenCV_INCLUDE_DIRS}")
+    message(STATUS "OpenCV_LIBS = ${OpenCV_LIBS}")
+    
+
     enable_language(OBJC)
     enable_language(OBJCXX)
     # mac: brew install glfw3
@@ -25,8 +52,6 @@ elseif (APPLE)
     message(${IOKIT_LIBRARY})
     message(${COREVID_LIBRARY})
 
-    target_link_directories(${MAIN} PUBLIC "/Users/chingcheonglee/Repos/C++Library/glfw/lib-arm64")
-
     target_link_libraries(
         ${MAIN}
         ${SDL2_LIBRARIES}
@@ -36,15 +61,9 @@ elseif (APPLE)
         ${COREVID_LIBRARY}
     )
     target_include_directories(${MAIN} PUBLIC ${SDL2_INCLUDE_DIRS})
-elseif (UNIX AND NOT APPLE)
-    # linux: sudo apt install libglfw3-dev
-    target_link_libraries(${MAIN}
-        GL
-        dl
-    )
 endif()
 
-
 add_subdirectory(imgui)
-target_link_libraries(${MAIN} ${IMGUI_SDL})
-set_source_files_properties(main.cpp PROPERTIES COMPILE_FLAGS "-x objective-c++")
+add_subdirectory(utils)
+
+target_link_libraries(${MAIN} ${IMGUI_SDL} ${UTILS_LIB})
