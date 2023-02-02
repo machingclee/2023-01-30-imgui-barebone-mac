@@ -12,14 +12,15 @@
 #include "imgui_impl_sdlrenderer.h"
 #include <stdio.h>
 #include <SDL.h>
-#include "utils/capture_utils.h"
 
 #if !SDL_VERSION_ATLEAST(2, 0, 17)
 #error This backend requires SDL 2.0.17+ because of SDL_RenderGeometry() function
 #endif
 
 #define TESTING 0
+
 #if TESTING
+#include "utils/capture_utils.h"
 
 int main(int argc, char** argv) {
     std::cout << "start recording video" << std::endl;
@@ -37,8 +38,8 @@ int main(int, char**) {
     }
 
     // Setup window
-    SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_ALLOW_HIGHDPI);
-    SDL_Window* window = SDL_CreateWindow("Eye Tracking Backend", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 860, 400, window_flags);
+    // SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_RESI);
+    SDL_Window* window = SDL_CreateWindow("Eye Tracking Backend", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 860, 400, 0);
 
     // Setup SDL_Renderer instance
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
