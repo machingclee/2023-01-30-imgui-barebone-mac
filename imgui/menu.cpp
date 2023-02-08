@@ -6,7 +6,9 @@
 #include <string>
 #include <vector>
 #include "utils/web_utils.h"
+#include "utils/get_file_next_digit.h"
 #include <thread>
+#include <sstream>
 
 void Menu::Render() {
     ImGui::Columns(2);
@@ -95,7 +97,14 @@ void Menu::Render() {
             }
 
             if (ImGui::Button("Start Screen Capture", ImVec2(200, 35))) {
-                CaptureUtils::start_screen_capture("./test001.avi");
+                std::string next_digit = get_file_next_digit(".", "avi");
+                std::ostringstream s;
+                s << Global::out_video_prefix
+                  << "_"
+                  << next_digit
+                  << "."
+                  << "avi";
+                CaptureUtils::start_screen_capture(s.str());
             }
         }
 

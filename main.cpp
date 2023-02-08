@@ -7,27 +7,32 @@
 // because it provides a rather limited API to the end-user. We provide this backend for the sake of completeness.
 // For a multi-platform app consider using e.g. SDL+DirectX on Windows and SDL+OpenGL on Linux/OSX.
 
+#if defined(__APPLE__)
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_sdlrenderer.h"
 #include "menu.h"
 #include "config/global.h"
+#include "utils/list_dir.h"
+#include "utils/split.h"
 #include <stdio.h>
 #include <SDL.h>
+#include "utils/get_file_next_digit.h"
+#endif
 
 #if !SDL_VERSION_ATLEAST(2, 0, 17)
 #error This backend requires SDL 2.0.17+ because of SDL_RenderGeometry() function
 #endif
 
 #define TESTING 0
-
 #if TESTING
-#include "utils/capture_utils.h"
+
+std::string file_dir = "/Users/chingcheonglee/Repos/C++/2023-01-30-imgui-barebone-mac/build";
 
 int main(int argc, char** argv) {
-    std::cout << "start recording video" << std::endl;
-    CaptureUtils::start_screen_capture();
+    std::cout << "the next number" << get_file_next_digit(file_dir) << std::endl;
 }
+
 #else
 // Main code
 int main(int, char**) {

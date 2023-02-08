@@ -97,7 +97,7 @@ int start_screen_capture(std::string filename) {
         cvtColor(im, bgrim, cv::COLOR_RGBA2BGR);
         resize(bgrim, resizedim, cv::Size(), 0.5, 0.5);
         writer << bgrim;
-        // imshow("desktop capture", resizedim);
+        imshow("desktop capture", resizedim);
         CGImageRelease(imageRef);
         int key = cv::waitKey(5);
         if (key == 27) {
@@ -106,6 +106,7 @@ int start_screen_capture(std::string filename) {
     }
 
     std::cout << "screen capture done" << std::endl;
+    cv::destroyAllWindows();
 #endif
 
 #if defined(__WIN32__)

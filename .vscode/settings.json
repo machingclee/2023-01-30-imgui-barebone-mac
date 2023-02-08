@@ -86,6 +86,7 @@
     "typeinfo": "cpp",
     "variant": "cpp",
     "algorithm": "cpp",
-    "regex": "cpp"
+    "regex": "cpp",
+    "filesystem": "cpp"
   }
 }

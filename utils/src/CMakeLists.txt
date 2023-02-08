@@ -3,10 +3,17 @@ set(
   "../include/utils/capture_utils.h"
   "../include/utils/common.h"
   "../include/utils/web_utils.h"
-  # "../include/utils/win_reg.h"
+  "../include/utils/list_dir.h"
+  "../include/utils/split.h"
+  "../include/utils/get_file_next_digit.h"
+
+  # "../include/utils/get_file_next_digit.cpp.h"
   utils/capture_utils.cpp
   utils/common.cpp
   utils/web_utils.cpp
+  utils/list_dir.cpp
+  utils/split.cpp
+  utils/get_file_next_digit.cpp
   # utils/register_protocol.cpp
 )
 
