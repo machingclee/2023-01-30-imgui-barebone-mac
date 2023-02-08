@@ -5,6 +5,7 @@ set(
   imgui_impl_sdl.cpp
   imgui_impl_sdlrenderer.cpp
   imgui_tables.cpp
+  menu.cpp
   imgui_widgets.cpp
   imgui.cpp
   imconfig.h
@@ -15,6 +16,9 @@ set(
   imstb_rectpack.h
   imstb_textedit.h
   imstb_truetype.h
+  settings.h
+  imguipp.h
+  imguipp.cpp
 )
 
 # set(
@@ -28,4 +32,4 @@ set(
 
 add_library(${IMGUI_SDL} ${SOURCES})
 target_include_directories(${IMGUI_SDL} PUBLIC .)
-target_link_libraries(${IMGUI_SDL} PUBLIC ${SDL2_LIBRARIES})
+target_link_libraries(${IMGUI_SDL} PUBLIC ${SDL2_LIBRARIES} ${CONFIG} ${UTILS_LIB})

@@ -10,6 +10,8 @@
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_sdlrenderer.h"
+#include "menu.h"
+#include "config/global.h"
 #include <stdio.h>
 #include <SDL.h>
 
@@ -39,7 +41,7 @@ int main(int, char**) {
 
     // Setup window
     // SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_RESI);
-    SDL_Window* window = SDL_CreateWindow("Eye Tracking Backend", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 860, 400, 0);
+    SDL_Window* window = SDL_CreateWindow(Global::application_title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 860, 400, 0);
 
     // Setup SDL_Renderer instance
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
@@ -116,25 +118,12 @@ int main(int, char**) {
             static float f = 0.0f;
             static int counter = 0;
 
+            Menu::Theme();
+
             ImGui::Begin("Hello, world!", NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize); // Create a window called "Hello, world!" and append into it.
             ImGui::SetWindowPos(ImVec2(0, 0));
             auto [x, y] = ImGui::GetMainViewport()->Size;
-            ImGui::SetWindowSize(ImVec2(x, y));
-
-            ImGui::Text("This is some useful text.");          // Display some text (you can use a format strings too)
-            ImGui::Checkbox("Demo Window", &show_demo_window); // Edit bools storing our window open/close state
-            ImGui::Checkbox("Another Window", &show_another_window);
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-            if (ImGui::Button("Button")) // Buttons return true when clicked (most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-            ImGui::End();
+            Menu::Render();
         }
 
         // 3. Show another simple window.
