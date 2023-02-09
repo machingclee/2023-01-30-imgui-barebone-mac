@@ -1,0 +1,2 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libutils.a CMakeFiles/utils.dir/utils/capture_utils.cpp.o CMakeFiles/utils.dir/utils/common.cpp.o CMakeFiles/utils.dir/utils/web_utils.cpp.o CMakeFiles/utils.dir/utils/list_dir.cpp.o CMakeFiles/utils.dir/utils/split.cpp.o CMakeFiles/utils.dir/utils/get_file_next_digit.cpp.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libutils.a

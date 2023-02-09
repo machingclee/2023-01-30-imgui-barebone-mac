@@ -59,7 +59,7 @@ hwnd2Mat::~hwnd2Mat() {
 };
 #endif
 
-int start_screen_capture(std::string filename) {
+int start_screen_capture(std::string filename, std::atomic<bool>* atomic_stop_screen_cap_flag) {
 #if defined(__APPLE__)
     size_t width = CGDisplayPixelsWide(CGMainDisplayID());
     size_t height = CGDisplayPixelsHigh(CGMainDisplayID());
@@ -88,7 +88,7 @@ int start_screen_capture(std::string filename) {
         return -1;
     }
 
-    while (true) {
+    while (!*atomic_stop_screen_cap_flag) {
         CGImageRef imageRef = CGDisplayCreateImage(CGMainDisplayID());
         CGContextDrawImage(
             contextRef,
@@ -97,7 +97,7 @@ int start_screen_capture(std::string filename) {
         cvtColor(im, bgrim, cv::COLOR_RGBA2BGR);
         resize(bgrim, resizedim, cv::Size(), 0.5, 0.5);
         writer << bgrim;
-        imshow("desktop capture", resizedim);
+        // imshow("desktop capture", resizedim);
         CGImageRelease(imageRef);
         int key = cv::waitKey(5);
         if (key == 27) {

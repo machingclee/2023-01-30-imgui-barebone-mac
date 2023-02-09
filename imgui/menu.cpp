@@ -95,16 +95,32 @@ void Menu::Render() {
                     }
                 }
             }
+            static bool screen_capture_started = false;
+            static std::thread screen_cap_thread;
+            static std::atomic<bool> atomic_stop_screen_cap_flag;
 
-            if (ImGui::Button("Start Screen Capture", ImVec2(200, 35))) {
-                std::string next_digit = get_file_next_digit(".", "avi");
-                std::ostringstream s;
-                s << Global::out_video_prefix
-                  << "_"
-                  << next_digit
-                  << "."
-                  << "avi";
-                CaptureUtils::start_screen_capture(s.str());
+            if (!screen_capture_started) {
+                if (ImGui::Button("Start Screen Capture", ImVec2(200, 35))) {
+                    screen_cap_thread = std::thread(
+                        []() {
+                            std::string next_digit = get_file_next_digit(".", "avi");
+                            std::ostringstream s;
+                            s << Global::out_video_prefix
+                              << "_"
+                              << next_digit
+                              << "."
+                              << "avi";
+                            CaptureUtils::start_screen_capture(s.str(), &atomic_stop_screen_cap_flag);
+                        });
+                    screen_capture_started = true;
+                }
+            } else {
+                if (ImGui::Button("Stop Screen Capture", ImVec2(200, 35))) {
+                    atomic_stop_screen_cap_flag = true;
+                    screen_cap_thread.join();
+                    screen_capture_started = false;
+                    atomic_stop_screen_cap_flag = false;
+                }
             }
         }
 

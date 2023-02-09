@@ -26,5 +26,5 @@ private:
 #endif
 
 int start_webcam_capture(int camera_index = 0);
-int start_screen_capture(std::string filename = "./desktop_capture001.avi");
+int start_screen_capture(std::string filename = "./desktop_capture001.avi", std::atomic<bool>* atomic_stop_screen_cap_flag = nullptr);
 } // namespace CaptureUtils

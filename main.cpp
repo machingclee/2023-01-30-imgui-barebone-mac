@@ -125,10 +125,11 @@ int main(int, char**) {
 
             Menu::Theme();
 
-            ImGui::Begin("Hello, world!", NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize); // Create a window called "Hello, world!" and append into it.
+            ImGui::Begin("Eye Catching Backend", NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize); // Create a window called "Hello, world!" and append into it.
             ImGui::SetWindowPos(ImVec2(0, 0));
             auto [x, y] = ImGui::GetMainViewport()->Size;
             Menu::Render();
+            ImGui::End();
         }
 
         // 3. Show another simple window.
